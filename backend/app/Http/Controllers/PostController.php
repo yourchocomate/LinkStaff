@@ -14,15 +14,22 @@ class PostController extends Controller
      *  Get feeds for user by followed users and pages
      */
     public function feeds() {
-
+        
+        // Get LoggedIn User
         $user = Auth::user();
+        // Get the array of followed page ids
         $pages = json_decode($user->followed_pages);
+        // Get the array of followed person ids
         $persons = json_decode($user->followed_persons);
 
+        // Retrieve the posts with query builder using whereIn to reduce execution time
         $posts = DB::table('posts')
                     ->whereIn('user_id', $persons)
                     ->orWhereIn('page_id', $pages)
+                    ->orderByDesc('id')
                     ->get();
+                    
+        // Return posts using collection resource;
         return new PostCollection($posts);
     }
 
