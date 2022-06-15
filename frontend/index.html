@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simple Js Challenge</title>
+    </head>
+    <body>
+        <!--  Canvas Element To Render The Square Block  -->
+        <canvas id="canvas"></canvas>
+        <script>
+            // Initiate
+            (function() {
+
+                // Get the canvas element by Id
+                const canvas = document.getElementById("canvas");
+                // Create 2 dimensional context
+                const ctx = canvas.getContext("2d");
+                
+                // Defining square size in the canvas 0 pixel at left in x axis And 50 pixel from up in y axis
+                let square = [
+                    {x: 0, y:50}
+                ];
+
+                // Velocity at x axis by 10 pixel per execution
+                let vx = 10;
+                // velocity at y axis by 10 pixel per execution
+                let vy = 10;
+                
+                // Makes the canvas size by window size
+                window.addEventListener('resize', resizeCanvas);
+
+                // Clear board at every render to prevent duplicate squares
+                const clearBoard = () => {
+                    ctx.fillStyle = "#fff";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+
+                // Draw the square by 100x100 pixel at x and y axis
+                const drawSquare = () => {
+                    ctx.fillStyle = "blue";
+                    ctx.fillRect(square[0].x, square[0].y,100,100);
+                    ctx.fill();
+                }
+
+                // Move the square by changing the velocity direction
+                const moveSquare = () => {
+
+                    // Set the velocity to opposite direction if the square is at the left side of x-axis
+                    // or if the square has reached the right side
+                    if(square[0].x<0 ||square[0].x>=(window.innerWidth - 110)){
+                        vx=-vx;
+                    }
+
+                    // Set the velocity to opposite direction if the square is at the ipper side of y-axis
+                    // or if the square has reached the bottom of y-axis
+                    if(square[0].y<0 ||square[0].y>=(window.innerHeight - 110)){
+                        vy=-vy; 
+                    }
+                    
+                    // Assign the incremet of velocity each time function runs
+                    square[0].x += vx;
+                    square[0].y += vy;
+
+                }
+
+                const main = () => {
+                    // Clear Boards
+                    clearBoard();
+                    // Draw the square with updated locations at x and y axis
+                    drawSquare();
+                    // Execute functions in loop with a delay of 1 seconds
+                    setTimeout(() => {
+                        moveSquare();
+                        main();
+                    },1000);
+                }
+
+                // Resize canvas on window loads
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth - 20;
+                    canvas.height = window.innerHeight - 20;
+                    // Initiate main function
+                    main();
+                }
+
+                // Initiate canvas size and execute square movement :)
+                resizeCanvas();
+
+            })()
+        </script>
+    </body>
+</html>
