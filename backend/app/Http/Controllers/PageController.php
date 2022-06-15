@@ -43,7 +43,7 @@ class PageController extends Controller
         // Get the array of followedPageId from user
         $followed = json_decode($user->followed_pages);
         // Check if Page Exists by pageId
-        $page = Page::findOrFail($id);
+        $page = Page::find($id);
 
         // Return if page not exists
         if(!$page) {
@@ -93,7 +93,7 @@ class PageController extends Controller
         // Get the array of followedPageId from user
         $followed = json_decode($user->followed_pages);
         // Check if Page Exists by pageId
-        $page = Page::findOrFail($id);
+        $page = Page::find($id);
 
         // Return if page not exists
         if(!$page) {

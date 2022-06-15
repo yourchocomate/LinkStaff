@@ -21,7 +21,7 @@ class ProfileController extends Controller
         // Get the array of followedPersonId from user
         $followed = json_decode($user->followed_persons);
         // Check if Person Exists by personId
-        $person = User::findOrFail($id);
+        $person = User::find($id);
 
         // Return if person not exists
         if(!$person) {
@@ -71,7 +71,7 @@ class ProfileController extends Controller
         // Get the array of followedPersonId from user
         $followed = json_decode($user->followed_persons);
         // Check if Person Exists by personId
-        $person = User::findOrFail($id);
+        $person = User::find($id);
 
         // Return if person not exists
         if(!$person) {

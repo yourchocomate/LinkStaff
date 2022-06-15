@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostCollection;
 use App\Models\Post;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -37,6 +38,7 @@ class PostController extends Controller
      *  Attach post by user with request object @post_content
      */
     public function makeUserPost(Request $request) {
+        
         $user = Auth::user();
         /**
          *  @post_content contains object with key "title" and "body"
@@ -46,6 +48,7 @@ class PostController extends Controller
             'post_content' => json_encode($request->post_content)
         ]);
 
+        // Return success if post created
         if($post) {
             $response = [
                 'success' => true,
@@ -65,6 +68,19 @@ class PostController extends Controller
      *  Attach post by pageId with request object @post_content
      */
     public function makePagePost(Request $request, $pageId) {
+        
+
+        // Check if page exists
+        $page = Page::find($pageId);
+        // Return if not exists
+        if(!$page) {
+            $response = [
+                'success' => false,
+                'message' => 'Page Not Exists'
+            ];
+            return response()->json($response, 200);
+        }
+
         /**
          *  @post_content contains object with key "title" and "body"
          */
@@ -73,6 +89,7 @@ class PostController extends Controller
             'post_content' => json_encode($request->post_content)
         ]);
 
+        // Return success if post created
         if($post) {
             $response = [
                 'success' => true,
