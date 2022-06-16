@@ -30,13 +30,4 @@ class Page extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get all of the posts for the Page
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function posts(): HasMany
-    {
-        return $this->hasMany(PagePost::class);
-    }
 }
