@@ -102,7 +102,7 @@ class AuthController extends Controller
             $response = [
                 'success' => true,
                 'data' => [
-                    $user,
+                    'user' => $user,
                     'token' => $user->createToken($request->email)->plainTextToken
                 ],
                 'message' => 'Register Success'
